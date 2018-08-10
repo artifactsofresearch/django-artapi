@@ -13,6 +13,5 @@ setup(
     packages=['artapi', ],
     install_requires=[
         'requests',
-        'urllib'
     ],
 )
