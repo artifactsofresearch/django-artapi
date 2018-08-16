@@ -12,7 +12,6 @@ setup(
     url='https://github.com/artifactsofresearch/django-artapi',
     packages=['artapi', ],
     install_requires=[
-        'requests',
-        'urllib'
+        'requests'
     ],
 )
