@@ -131,7 +131,13 @@ class CoreApiClient(object):
         return response
 
     def get_statuses(self, request_ids):
-        url = self.get_absolute_url('/statuses/' + request_ids)
+        """
+        Get transaction statuses by a list of request id's
+        :param request_ids:
+        :return:
+        """
+        req_ids_str = ','.join(request_ids)
+        url = self.get_api_absolute_url('/transaction/statuses/?request_ids=' + req_ids_str)
         response = self.get(url)
 
         return response
