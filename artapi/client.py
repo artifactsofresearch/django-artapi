@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import requests
 
 try:
@@ -44,9 +46,8 @@ class CoreApiClient(object):
         This is base method that will be used by get(), post(), put(), etc
         methods. args and kwargs can contain custom headers, data, params or files
         """
-        # Populate headers and perform request
 
-        self.expire_token()
+        # Populate headers and perform request
         headers = self.get_headers(kwargs.pop('headers', None))
         url = self.get_absolute_url(url)
 
@@ -60,19 +61,24 @@ class CoreApiClient(object):
         return response
 
     def get_headers(self, headers=None):
+        """
+        Prepare headers to use
+        :param additional headers:
+        :return headers dict:
+        """
         headers = headers if headers else {}
         headers['Accept'] = 'application/json;'
 
-        if self.token is None:
+        if self.is_token_expired:
             self.token = self._get_token()
         headers['Authorization'] = "Bearer {}".format(self.token)
         return headers
 
     def get(self, url=None, *args, **kwargs):
-        return self.perform_request('get', url, *args, **kwargs)
+        return self.retry_if_401('get', url, *args, **kwargs)
 
     def post(self, url=None, *args, **kwargs):
-        return self.perform_request('post', url, *args, **kwargs)
+        return self.retry_if_401('post', url, *args, **kwargs)
 
     def put(self, url=None, *args, **kwargs):
         return self.perform_request('put', url, *args, **kwargs)
@@ -83,44 +89,77 @@ class CoreApiClient(object):
     def delete(self, url=None, *args, **kwargs):
         return self.perform_request('delete', url, *args, **kwargs)
 
+    def retry_if_401(self, method, url, *args, **kwargs):
+        response = self.perform_request(method, url, *args, **kwargs)
+        if response.status_code == 401:
+            self._get_token()
+            return self.perform_request(method, url, *args, **kwargs)
+        return response
+
     def get_absolute_url(self, url):
+        """
+        Prepare url to Core application
+        :param url:
+        :return string url:
+        """
         return urlparse.urljoin(self.api_url, url)
 
     def get_api_absolute_url(self, url):
+        """
+        Prepare full API url to Core application
+        :param url:
+        :return string url:
+        """
         url_temp = 'v{}{}'.format(self.api_version, url)
         return self.get_absolute_url(url_temp)
+
+    @property
+    def is_token_expired(self):
+        """
+        Check if current token is ok
+        :return True - token is ok. False - expired:
+        """
+        if self.expired:
+            if self.expired >= datetime.now() - timedelta(minutes=5):
+                return True
+        return False
 
     def _get_token(self):
         """
         Returns token for header
+        :return string object:
         """
         url = self.get_absolute_url('/o/token/')
         response = requests.post(url, data={"grant_type": "client_credentials",
                                             'client_id': self.client_id,
                                             'client_secret': self.client_secret})
-        # TODO: Check if possible to do it
-        # self.expired = response.data.get("expired")
-        if response.ok:
-            return response.json().get('access_token')
+        response.raise_for_status()
 
-    def expire_token(self):
-        """
-        TODO: Implement token expiration.
-        Can be:
-         if self.expired == datetime.now():
-            self.token = None
+        response = response.json()
+        self.token = response['access_token']
+        expires = response['expires_in']
+        self.expired = datetime.now() + timedelta(seconds=expires)
 
-        """
-        pass
+        return self.token
 
     def send_poa(self, data):
+        """
+        Send POA data to Core application
+        :param data:
+        :return requests Response object:
+        """
         url = self.get_api_absolute_url('/poa/')
         response = self.post(url, json=data)
 
         return response
 
     def send_poe(self, data, file_obj):
-        # TODO: document library
+        """
+        Send POE data to Core application
+        :param data:
+        :param file_obj:
+        :return requests Response object:
+        """
         url = self.get_api_absolute_url('/poe/')
         poe = {
             'data': json.dumps(data)
@@ -134,7 +173,7 @@ class CoreApiClient(object):
         """
         Get transaction statuses by a list of request id's
         :param request_ids:
-        :return:
+        :return requests Response object:
         """
         req_ids_str = ','.join(request_ids)
         url = self.get_api_absolute_url('/transaction/statuses/?request_ids=' + req_ids_str)
