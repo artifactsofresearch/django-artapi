@@ -25,7 +25,7 @@ class CoreApiClient(object):
     """
 
     token = None
-    expired = None
+    expires_at = None
 
     __instance = None
 
@@ -116,13 +116,12 @@ class CoreApiClient(object):
     @property
     def is_token_expired(self):
         """
-        Check if current token is ok
-        :return True - token is ok. False - expired:
+        Check if current token is expired
+        :return True - token is expired or not exists. False - token is ok:
         """
-        if self.expired:
-            if self.expired >= datetime.now() - timedelta(minutes=5):
-                return True
-        return False
+        if self.expires_at and (self.expires_at >= datetime.now() - timedelta(minutes=5)):
+            return False
+        return True
 
     def _get_token(self):
         """
@@ -138,7 +137,7 @@ class CoreApiClient(object):
         response = response.json()
         self.token = response['access_token']
         expires = response['expires_in']
-        self.expired = datetime.now() + timedelta(seconds=expires)
+        self.expires_at = datetime.now() + timedelta(seconds=expires)
 
         return self.token
 
