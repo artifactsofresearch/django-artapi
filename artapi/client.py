@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-import requests
+import requests, os
 
 try:
     # python 3
@@ -24,9 +24,6 @@ class CoreApiClient(object):
         client.get('/health/', data={'test': 'test'})
     """
 
-    token = None
-    expires_at = None
-
     __instance = None
 
     def __new__(cls, *args, **kwargs):
@@ -39,6 +36,25 @@ class CoreApiClient(object):
         self.client_id = client_id
         self.client_secret = client_secret
         self.api_version = api_version
+
+    @property
+    def token(self):
+        return os.environ.get('CORE_API_TOKEN')
+
+    @token.setter
+    def token(self, value):
+        os.environ['CORE_API_TOKEN'] = value
+
+    @property
+    def expires_at(self):
+        expires_at = os.environ.get('CORE_API_EXPIRES_AT')
+        if expires_at:
+            return datetime.strptime(expires_at, '%Y-%m-%d %H:%M:%S.%f')
+        return None
+
+    @expires_at.setter
+    def expires_at(self, value):
+        os.environ['CORE_API_EXPIRES_AT'] = str(value)
 
     def perform_request(self, method='get', url=None, *args, **kwargs):
         """
