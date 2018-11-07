@@ -1,13 +1,20 @@
+from datetime import datetime, timedelta
 import os
 import unittest
 from unittest import mock
-
 from artapi.client import CoreApiClient
 
 
 class TestResponse:
     def __init__(self):
         self.status_code = 401
+
+    def raise_for_status(self):
+        pass
+
+    def json(self):
+        return {'access_token': 'test-token',
+                'expires_in': 60 * 60}
 
 
 class TestApiClient(unittest.TestCase):
@@ -47,3 +54,30 @@ class TestApiClient(unittest.TestCase):
         """
         self.client.post()
         self.assertEqual(mock_perform_request.call_count, 2)
+
+    def test_is_token_expired(self):
+        self.client.expires_at = datetime.now() - timedelta(minutes=10)
+        self.assertTrue(self.client.is_token_expired)
+
+        self.client.expires_at = datetime.now()
+        self.assertFalse(self.client.is_token_expired)
+
+    def test_expires_at(self):
+        """
+        Check if return date is valid
+        """
+        self.client.expires_at = datetime.now()
+        self.assertEqual(self.client.expires_at,
+                         datetime.strptime(os.environ['CORE_API_EXPIRES_AT'], '%Y-%m-%d %H:%M:%S.%f'))
+
+    @mock.patch('requests.post', return_value=TestResponse())
+    def test__get_toke(self, mock_requests_post):
+        """
+        Check if return valid token
+        """
+        token = self.client._get_token()
+        self.assertEqual(token, 'test-token')
+
+
+if __name__ == '__main__':
+    unittest.main()
