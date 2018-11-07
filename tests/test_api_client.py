@@ -2,8 +2,6 @@ import os
 import unittest
 from unittest import mock
 
-import requests
-
 from artapi.client import CoreApiClient
 
 
@@ -14,7 +12,7 @@ class TestResponse:
 
 class TestApiClient(unittest.TestCase):
     def setUp(self):
-        self.client = CoreApiClient('test-api-url', 'test-client-id', 'test-client-secret', 'test-api-version')
+        self.client = CoreApiClient('https://site.com/', 'test-client-id', 'test-client-secret', 1)
 
     def test_set_token(self):
         self.client.token = 'test-token'
@@ -37,14 +35,15 @@ class TestApiClient(unittest.TestCase):
 
     def test_url(self):
         """
-        Test if url is valid
+        Test that URL is validly formed
         """
-        self.assertEqual(self.client.get_api_absolute_url('test-url'), 'vtest-api-versiontest-url')
+        self.assertEqual(self.client.get_api_absolute_url('/poa/'), 'https://site.com/v1/poa/')
 
+    @mock.patch.object(CoreApiClient, '_get_token', return_value=TestResponse())
     @mock.patch.object(CoreApiClient, 'perform_request', return_value=TestResponse())
-    def test_401_error(self, mock_perform_request):
+    def test_401_error(self, mock_perform_request, mock__get_token):
         """
         Check if you received a 401 error, went to get a token
         """
-        with self.assertRaises(requests.exceptions.MissingSchema):
-            self.client.post()
+        self.client.post()
+        self.assertEqual(mock_perform_request.call_count, 2)
