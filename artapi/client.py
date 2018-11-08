@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
-import requests, os
+import requests
+import shelve
 
 try:
     # python 3
@@ -31,30 +32,40 @@ class CoreApiClient(object):
             CoreApiClient.__instance = object.__new__(cls)
         return CoreApiClient.__instance
 
-    def __init__(self, api_url, client_id, client_secret, api_version):
+    def __init__(self, api_url, client_id, client_secret, api_version, cache_location=''):
         self.api_url = api_url
         self.client_id = client_id
         self.client_secret = client_secret
         self.api_version = api_version
+        self.cache_location = cache_location
 
     @property
     def token(self):
-        return os.environ.get('CORE_API_TOKEN')
+        f = shelve.open(self.cache_location + '.cache')
+        t = f['CORE_API_TOKEN']
+        f.close()
+        return t
 
     @token.setter
     def token(self, value):
-        os.environ['CORE_API_TOKEN'] = value
+        f = shelve.open(self.cache_location + '.cache')
+        f['CORE_API_TOKEN'] = value
+        f.close()
 
     @property
     def expires_at(self):
-        expires_at = os.environ.get('CORE_API_EXPIRES_AT')
+        f = shelve.open(self.cache_location + '.cache')
+        expires_at = f.get('CORE_API_EXPIRES_AT')
+        f.close()
         if expires_at:
-            return datetime.strptime(expires_at, '%Y-%m-%d %H:%M:%S.%f')
+            return datetime.strptime(str(expires_at), '%Y-%m-%d %H:%M:%S.%f')
         return None
 
     @expires_at.setter
     def expires_at(self, value):
-        os.environ['CORE_API_EXPIRES_AT'] = str(value)
+        f = shelve.open(self.cache_location + '.cache')
+        f['CORE_API_EXPIRES_AT'] = value
+        f.close()
 
     def perform_request(self, method='get', url=None, *args, **kwargs):
         """
