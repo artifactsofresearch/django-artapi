@@ -39,3 +39,9 @@ INSTALLED_APPS = (
 
 `ArtApiClient` is wrapper over requests library that ensures passing needed headers to request.
 `ArtApiClient().get('/health/')` will call GET on `{ART_API_URL}/health/` url and returns data
+
+
+# Tests
+To run tests:
+
+`python -m unittest discover -s {path-to-project}`
