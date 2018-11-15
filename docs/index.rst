@@ -11,7 +11,7 @@ Welcome to django-artapi's documentation!
    :caption: Contents:
 
    client
-   readme
+   artapi
 
 
 Indices and tables

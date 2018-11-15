@@ -7,6 +7,7 @@ Versions supported by library bumpversion lib. More about it https://pypi.python
 
 Get current version
 -------------------
+::
 
     python setup.py --version
 
@@ -16,9 +17,9 @@ Create new version
 1. Install ``bumpversion``
 2. Run
 
-       bumpversion <part (required)>
+   ``bumpversion <part (required)>``
 
-    The part of the version to increase, e.g. major, minor, patch.
+   The part of the version to increase, e.g. major, minor, patch.
     - Patch increase from 1.0.0 to 1.0.1
     - Minor increase from 1.0.0 to 1.1.0
     - Patch increase from 1.0.0 to 2.0.0
@@ -29,7 +30,7 @@ Do not forget to change CHANGELOG.md.
 Quick start
 -----------
 
-Add ``artapi`` to your ``INSTALLED_APPS`` setting
+Add ``artapi`` to your ``INSTALLED_APPS`` setting::
 
     INSTALLED_APPS = (
 
@@ -50,6 +51,6 @@ artapi.client
 
 Tests
 -----
-To run tests: python
-::
+To run tests: python::
+
     python -m unittest discover -s {path-to-project}
