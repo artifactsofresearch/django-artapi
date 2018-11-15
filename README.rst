@@ -30,14 +30,15 @@ Do not forget to change CHANGELOG.md.
 Quick start
 -----------
 
-Add ``artapi`` to your ``INSTALLED_APPS`` setting::
+client = CoreApiClient(api_url, client_id, client_id, api_version)
 
-    INSTALLED_APPS = (
+client.send_poa(dada)
 
-        'artapi',
+By default, django-artapi will not store the token and will have to be requested at each client initialization.
+To memorize the token not only for the current session, you need to pass a parameter ``cache_location``:
 
-    )
-
+client = CoreApiClient(api_url, client_id, client_id, api_version, cache_location)
+The ``cache_location`` indicates the path to the storage of the token cache file.
 
 Modules and features
 --------------------
@@ -51,6 +52,6 @@ artapi.client
 
 Tests
 -----
-To run tests: python::
+To run tests::
 
     python -m unittest discover -s {path-to-project}
