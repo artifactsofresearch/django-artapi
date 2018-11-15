@@ -152,8 +152,7 @@ class CoreApiClient(object):
 
     def _set_token(self):
         """
-        Returns token for header
-        :return string object:
+        Set token from request
         """
         url = self.get_absolute_url('/o/token/')
         response = requests.post(url, data={"grant_type": "client_credentials",
