@@ -32,11 +32,12 @@ class CoreApiClient(object):
             CoreApiClient.__instance = object.__new__(cls)
         return CoreApiClient.__instance
 
-    def __init__(self, api_url, client_id, client_secret, api_version, cache_location=''):
+    def __init__(self, api_url, client_id, client_secret, api_version, cache_location=None):
         self.api_url = api_url
         self.client_id = client_id
         self.client_secret = client_secret
         self.api_version = api_version
+        # if cache_Location is None, we don't store token in cache file
         self.cache_location = cache_location
         if self.cache_location is None:
             self.token_dict = {'API_TOKEN': None,
@@ -44,7 +45,6 @@ class CoreApiClient(object):
 
     @property
     def token(self):
-        # if cache_Location is None, we don't store token in cache file
         if self.cache_location is None:
             return self.token_dict
         else:
