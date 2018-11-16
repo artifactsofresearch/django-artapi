@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
-import requests, os
+import requests
+import shelve
 
 try:
     # python 3
@@ -31,30 +32,39 @@ class CoreApiClient(object):
             CoreApiClient.__instance = object.__new__(cls)
         return CoreApiClient.__instance
 
-    def __init__(self, api_url, client_id, client_secret, api_version):
+    def __init__(self, api_url, client_id, client_secret, api_version, cache_location=None):
         self.api_url = api_url
         self.client_id = client_id
         self.client_secret = client_secret
         self.api_version = api_version
+        # if cache_Location is None, we don't store token in cache file
+        self.cache_location = cache_location
+        if self.cache_location is None:
+            self.token_dict = {'API_TOKEN': None,
+                               'TOKEN_EXPIRES': None}
 
     @property
     def token(self):
-        return os.environ.get('CORE_API_TOKEN')
+        if self.cache_location is None:
+            return self.token_dict
+        else:
+            shelve_file = shelve.open(self.cache_location + '.cache')
+            token = shelve_file.get('API_TOKEN')
+            expires_at = shelve_file.get('TOKEN_EXPIRES')
+            shelve_file.close()
+            return {'API_TOKEN': token,
+                    'TOKEN_EXPIRES': expires_at}
 
     @token.setter
-    def token(self, value):
-        os.environ['CORE_API_TOKEN'] = value
-
-    @property
-    def expires_at(self):
-        expires_at = os.environ.get('CORE_API_EXPIRES_AT')
-        if expires_at:
-            return datetime.strptime(expires_at, '%Y-%m-%d %H:%M:%S.%f')
-        return None
-
-    @expires_at.setter
-    def expires_at(self, value):
-        os.environ['CORE_API_EXPIRES_AT'] = str(value)
+    def token(self, response):
+        if self.cache_location is None:
+            self.token_dict['API_TOKEN'] = response['access_token']
+            self.token_dict['TOKEN_EXPIRES'] = datetime.now() + timedelta(seconds=response['expires_in'])
+        else:
+            shelve_file = shelve.open(self.cache_location + '.cache')
+            shelve_file['API_TOKEN'] = response['access_token']
+            shelve_file['TOKEN_EXPIRES'] = datetime.now() + timedelta(seconds=response['expires_in'])
+            shelve_file.close()
 
     def perform_request(self, method='get', url=None, *args, **kwargs):
         """
@@ -86,8 +96,8 @@ class CoreApiClient(object):
         headers['Accept'] = 'application/json;'
 
         if self.is_token_expired:
-            self.token = self._get_token()
-        headers['Authorization'] = "Bearer {}".format(self.token)
+            self._set_token()
+        headers['Authorization'] = "Bearer {}".format(self.token['API_TOKEN'])
         return headers
 
     def get(self, url=None, *args, **kwargs):
@@ -108,7 +118,7 @@ class CoreApiClient(object):
     def retry_if_401(self, method, url, *args, **kwargs):
         response = self.perform_request(method, url, *args, **kwargs)
         if response.status_code == 401:
-            self._get_token()
+            self._set_token()
             return self.perform_request(method, url, *args, **kwargs)
         return response
 
@@ -135,27 +145,21 @@ class CoreApiClient(object):
         Check if current token is expired
         :return True - token is expired or not exists. False - token is ok:
         """
-        if self.expires_at and (self.expires_at >= datetime.now() - timedelta(minutes=5)):
+        expires_at = self.token.get('TOKEN_EXPIRES')
+        if expires_at and (expires_at >= datetime.now() - timedelta(minutes=5)):
             return False
         return True
 
-    def _get_token(self):
+    def _set_token(self):
         """
-        Returns token for header
-        :return string object:
+        Set token from request
         """
         url = self.get_absolute_url('/o/token/')
         response = requests.post(url, data={"grant_type": "client_credentials",
                                             'client_id': self.client_id,
                                             'client_secret': self.client_secret})
         response.raise_for_status()
-
-        response = response.json()
-        self.token = response['access_token']
-        expires = response['expires_in']
-        self.expires_at = datetime.now() + timedelta(seconds=expires)
-
-        return self.token
+        self.token = response.json()
 
     def send_poa(self, data):
         """
