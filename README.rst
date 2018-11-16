@@ -34,7 +34,7 @@ client = CoreApiClient(api_url, client_id, client_id, api_version)
 
 client.send_poa(dada)
 
-By default, django-artapi will not store the token and will have to be requested at each client initialization.
+By default, the library stores the token inside the CoreApiClient.
 To memorize the token not only for the current session, you need to pass a parameter ``cache_location``:
 
 client = CoreApiClient(api_url, client_id, client_id, api_version, cache_location)
