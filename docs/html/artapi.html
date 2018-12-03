@@ -190,8 +190,11 @@
 </div>
 <div class="section" id="quick-start">
 <h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
-<p>client = CoreApiClient(api_url, client_id, client_id, api_version)</p>
-<p>client.send_poa(data)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">CoreApiClient</span><span class="p">(</span><span class="n">api_url</span><span class="p">,</span> <span class="n">client_id</span><span class="p">,</span> <span class="n">client_id</span><span class="p">,</span> <span class="n">api_version</span><span class="p">)</span>
+
+<span class="n">client</span><span class="o">.</span><span class="n">send_poa</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>By default, the library stores the token inside the CoreApiClient.
 To memorize the token not only for the current session, you need to pass a parameter <code class="docutils literal notranslate"><span class="pre">cache_location</span></code>:</p>
 <p>client = CoreApiClient(api_url, client_id, client_id, api_version, cache_location)
