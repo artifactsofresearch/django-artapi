@@ -29,10 +29,11 @@ Do not forget to change CHANGELOG.md.
 
 Quick start
 -----------
+::
 
-client = CoreApiClient(api_url, client_id, client_id, api_version)
+    client = CoreApiClient(api_url, client_id, client_id, api_version)
 
-client.send_poa(dada)
+    client.send_poa(data)
 
 By default, the library stores the token inside the CoreApiClient.
 To memorize the token not only for the current session, you need to pass a parameter ``cache_location``:
@@ -55,3 +56,4 @@ Tests
 To run tests::
 
     python -m unittest discover -s {path-to-project}
+

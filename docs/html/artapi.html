@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>django-artapi &mdash; django-artapi  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Core Api Client" href="client.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> django-artapi
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="client.html">Core Api Client</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">django-artapi</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#versions">Versions:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-current-version">Get current version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-new-version">Create new version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#modules-and-features">Modules and features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#artapi-client">artapi.client</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#tests">Tests</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">django-artapi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>django-artapi</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/artapi.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="django-artapi">
+<h1>django-artapi<a class="headerlink" href="#django-artapi" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="versions">
+<h2>Versions:<a class="headerlink" href="#versions" title="Permalink to this headline">¶</a></h2>
+<p>Versions supported by library bumpversion lib. More about it <a class="reference external" href="https://pypi.python.org/pypi/bumpversion">https://pypi.python.org/pypi/bumpversion</a></p>
+</div>
+<div class="section" id="get-current-version">
+<h2>Get current version<a class="headerlink" href="#get-current-version" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">version</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-new-version">
+<h2>Create new version<a class="headerlink" href="#create-new-version" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Install <code class="docutils literal notranslate"><span class="pre">bumpversion</span></code></p>
+</li>
+<li><p class="first">Run</p>
+<p><code class="docutils literal notranslate"><span class="pre">bumpversion</span> <span class="pre">&lt;part</span> <span class="pre">(required)&gt;</span></code></p>
+<dl class="docutils">
+<dt>The part of the version to increase, e.g. major, minor, patch.</dt>
+<dd><ul class="first last simple">
+<li>Patch increase from 1.0.0 to 1.0.1</li>
+<li>Minor increase from 1.0.0 to 1.1.0</li>
+<li>Patch increase from 1.0.0 to 2.0.0</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+<p>Do not forget to change CHANGELOG.md.</p>
+</div>
+<div class="section" id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<p>client = CoreApiClient(api_url, client_id, client_id, api_version)</p>
+<p>client.send_poa(data)</p>
+<p>By default, the library stores the token inside the CoreApiClient.
+To memorize the token not only for the current session, you need to pass a parameter <code class="docutils literal notranslate"><span class="pre">cache_location</span></code>:</p>
+<p>client = CoreApiClient(api_url, client_id, client_id, api_version, cache_location)
+The <code class="docutils literal notranslate"><span class="pre">cache_location</span></code> indicates the path to the storage of the token cache file.</p>
+</div>
+<div class="section" id="modules-and-features">
+<h2>Modules and features<a class="headerlink" href="#modules-and-features" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="artapi-client">
+<h3>artapi.client<a class="headerlink" href="#artapi-client" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ArtApiClient</span></code> is wrapper over requests library that ensures passing needed headers to request.
+<code class="docutils literal notranslate"><span class="pre">ArtApiClient().get('/health/')</span></code> will call GET on <code class="docutils literal notranslate"><span class="pre">{ART_API_URL}/health/</span></code> url and returns data</p>
+</div>
+</div>
+<div class="section" id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
+<p>To run tests:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">unittest</span> <span class="n">discover</span> <span class="o">-</span><span class="n">s</span> <span class="p">{</span><span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">project</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="client.html" class="btn btn-neutral" title="Core Api Client" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ArtifactsAI
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

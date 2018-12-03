@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Core Api Client &mdash; django-artapi  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="django-artapi" href="artapi.html" />
+    <link rel="prev" title="Welcome to django-artapi’s documentation!" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> django-artapi
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Core Api Client</a></li>
+<li class="toctree-l1"><a class="reference internal" href="artapi.html">django-artapi</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">django-artapi</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Core Api Client</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-artapi.client">
+<span id="core-api-client"></span><h1>Core Api Client<a class="headerlink" href="#module-artapi.client" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="artapi.client.CoreApiClient">
+<em class="property">class </em><code class="descclassname">artapi.client.</code><code class="descname">CoreApiClient</code><span class="sig-paren">(</span><em>api_url</em>, <em>client_id</em>, <em>client_secret</em>, <em>api_version</em>, <em>cache_location=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artapi/client.html#CoreApiClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#artapi.client.CoreApiClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Client that allow to connect to Core Api service.
+Client is singleton object to keep token.
+Example usage:</p>
+<blockquote>
+<div>client = CoreApiClient()
+client.get(‘/health/’, data={‘test’: ‘test’})</div></blockquote>
+<dl class="method">
+<dt id="artapi.client.CoreApiClient.get_absolute_url">
+<code class="descname">get_absolute_url</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artapi/client.html#CoreApiClient.get_absolute_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#artapi.client.CoreApiClient.get_absolute_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare url to Core application
+:param url:
+:return string url:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artapi.client.CoreApiClient.get_api_absolute_url">
+<code class="descname">get_api_absolute_url</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artapi/client.html#CoreApiClient.get_api_absolute_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#artapi.client.CoreApiClient.get_api_absolute_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare full API url to Core application
+:param url:
+:return string url:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artapi.client.CoreApiClient.get_headers">
+<code class="descname">get_headers</code><span class="sig-paren">(</span><em>headers=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artapi/client.html#CoreApiClient.get_headers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#artapi.client.CoreApiClient.get_headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare headers to use
+:param additional headers:
+:return headers dict:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artapi.client.CoreApiClient.get_statuses">
+<code class="descname">get_statuses</code><span class="sig-paren">(</span><em>request_ids</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artapi/client.html#CoreApiClient.get_statuses"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#artapi.client.CoreApiClient.get_statuses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get transaction statuses by a list of request id’s
+:param request_ids:
+:return requests Response object:</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="artapi.client.CoreApiClient.is_token_expired">
+<code class="descname">is_token_expired</code><a class="headerlink" href="#artapi.client.CoreApiClient.is_token_expired" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if current token is expired
+:return True - token is expired or not exists. False - token is ok:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artapi.client.CoreApiClient.perform_request">
+<code class="descname">perform_request</code><span class="sig-paren">(</span><em>method='get'</em>, <em>url=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artapi/client.html#CoreApiClient.perform_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#artapi.client.CoreApiClient.perform_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method that allows to generate request and returns response
+This is base method that will be used by get(), post(), put(), etc
+methods. args and kwargs can contain custom headers, data, params or files</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artapi.client.CoreApiClient.send_poa">
+<code class="descname">send_poa</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artapi/client.html#CoreApiClient.send_poa"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#artapi.client.CoreApiClient.send_poa" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send POA data to Core application
+:param data:
+:return requests Response object:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="artapi.client.CoreApiClient.send_poe">
+<code class="descname">send_poe</code><span class="sig-paren">(</span><em>data</em>, <em>file_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/artapi/client.html#CoreApiClient.send_poe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#artapi.client.CoreApiClient.send_poe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send POE data to Core application
+:param data:
+:param file_obj:
+:return requests Response object:</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="artapi.html" class="btn btn-neutral float-right" title="django-artapi" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Welcome to django-artapi’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, ArtifactsAI
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
