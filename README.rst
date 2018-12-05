@@ -57,3 +57,14 @@ To run tests::
 
     python -m unittest discover -s {path-to-project}
 
+
+Documentation
+-------------
+Read full documentation on https://artifactsofresearch.github.io/django-artapi/
+
+Use the following commands to update documentation.
+::
+
+    pip3 install sphinx
+    cd docs/
+    make html
